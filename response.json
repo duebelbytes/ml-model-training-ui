@@ -1,0 +1,46 @@
+{
+    "document": "a1231097la",
+    "highlights": [
+      {
+        "text": "St. Mary's of Michigan: Washington Ave.",
+        "confidence": 85,
+        "coordinates": { "x": 50, "y": 50, "width": 250, "height": 20 }
+      },
+      {
+        "text": "Patient Data",
+        "confidence": 90,
+        "coordinates": { "x": 50, "y": 100, "width": 100, "height": 20 }
+      },
+      {
+        "text": "Patient Name: Davario D Webb",
+        "confidence": 83,
+        "coordinates": { "x": 50, "y": 150, "width": 200, "height": 20 }
+      },
+      {
+        "text": "DOB: 11/16/1982",
+        "confidence": 82,
+        "coordinates": { "x": 50, "y": 200, "width": 150, "height": 20 }
+      },
+      {
+        "text": "MED Rec#: 084850",
+        "confidence": 88,
+        "coordinates": { "x": 50, "y": 250, "width": 150, "height": 20 }
+      },
+      {
+        "text": "Allergies: Milk products",
+        "confidence": 81,
+        "coordinates": { "x": 50, "y": 300, "width": 200, "height": 20 }
+      },
+      {
+        "text": "Chief Complaint: multiple complaints",
+        "confidence": 84,
+        "coordinates": { "x": 50, "y": 350, "width": 250, "height": 20 }
+      },
+      {
+        "text": "Vital Signs: BP 115/62, Pulse 107",
+        "confidence": 79,
+        "coordinates": { "x": 50, "y": 400, "width": 300, "height": 20 }
+      }
+    ]
+  }
+  

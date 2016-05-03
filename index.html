@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCR Trainer</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+    }
+    #container {
+      position: relative;
+      max-width: 2560px;
+      margin: 0 auto;
+    }
+    #document {
+      width: 100%;
+      display: block;
+    }
+    .box {
+      position: absolute;
+      border: 2px solid red;
+      box-sizing: border-box;
+    }
+    #zoom-control {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <input type="range" id="zoom-control" min="0.5" max="2" step="0.1" value="1">
+  <div id="container">
+    <img id="document" src="record.jpg" alt="Document">
+  </div>
+  <div id="input-container"></div>
+  <script>
+    const img = document.getElementById('document');
+    const container = document.getElementById('container');
+    const zoomControl = document.getElementById('zoom-control');
+
+    function drawBoxes(ocrData, scale) {
+      container.querySelectorAll('.box').forEach(box => box.remove());
+      ocrData.textAnnotations.forEach(item => {
+        const vertices = item.boundingPoly.vertices;
+        const x = vertices[0].x * scale;
+        const y = vertices[0].y * scale;
+        const width = (vertices[1].x - vertices[0].x) * scale;
+        const height = (vertices[2].y - vertices[0].y) * scale;
+
+        const box = document.createElement('div');
+        box.className = 'box';
+        box.style.left = `${x}px`;
+        box.style.top = `${y}px`;
+        box.style.width = `${width}px`;
+        box.style.height = `${height}px`;
+
+        container.appendChild(box);
+      });
+    }
+
+    img.onload = function() {
+      const imgWidth = img.naturalWidth;
+      const imgHeight = img.naturalHeight;
+      const scaleX = img.clientWidth / imgWidth;
+      const scaleY = scaleX; // Maintain aspect ratio
+
+      // Fetch OCR response data and draw boxes
+      fetch('ocr_response.json')
+        .then(response => response.json())
+        .then(ocrData => {
+          console.log('OCR data loaded:', ocrData);
+          drawBoxes(ocrData, scaleX);
+
+          zoomControl.addEventListener('input', function() {
+            const zoomLevel = parseFloat(zoomControl.value);
+            img.style.transform = `scale(${zoomLevel})`;
+            img.style.transformOrigin = 'top left';
+            drawBoxes(ocrData, scaleX * zoomLevel);
+          });
+        })
+        .catch(error => console.error('Error loading OCR data:', error));
+    };
+  </script>
+</body>
+</html>
