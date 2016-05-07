@@ -237,9 +237,7 @@
       const submitButton = document.getElementById("submit-button");
       let currentSelectedBox = null;
 
-      submitButton.addEventListener("click", handleSubmit);
-
-      function drawBoxes(ocrData, scale) {
+      const drawBoxes = (ocrData, scale) => {
         container.querySelectorAll(".box").forEach((box) => box.remove());
         descriptionForm.innerHTML = "";
 
@@ -263,7 +261,6 @@
 
           container.appendChild(box);
 
-          // Create input-group div
           const inputGroup = document.createElement("div");
           inputGroup.className = "input-group";
 
@@ -272,17 +269,16 @@
           input.value = item.description;
           input.className = "correction";
           input.dataset.index = index;
-          input.dataset.originalValue = item.description; // Store the original value
+          input.dataset.originalValue = item.description;
           input.addEventListener("focus", () => {
             selectBox(box, item.description, index);
           });
-          // Create select element
+
           const select = document.createElement("select");
           select.className = "error-category";
           select.dataset.index = index;
           select.required = true;
 
-          // Add an empty option
           const emptyOption = document.createElement("option");
           emptyOption.value = "";
           emptyOption.textContent = "Error type";
@@ -291,7 +287,6 @@
           select.appendChild(emptyOption);
 
           const options = ["Misread", "Incomplete", "Bad format", "Other"];
-
           options.forEach((optionText) => {
             const option = document.createElement("option");
             option.value = optionText;
@@ -299,16 +294,14 @@
             select.appendChild(option);
           });
 
-          // Append input and select to input-group
           inputGroup.appendChild(input);
           inputGroup.appendChild(select);
 
-          // Append input-group to descriptionForm
           descriptionForm.appendChild(inputGroup);
         });
-      }
+      };
 
-      function selectBox(box, description, index) {
+      const selectBox = (box, description, index) => {
         if (currentSelectedBox) {
           currentSelectedBox.classList.remove("selected");
         }
@@ -324,26 +317,22 @@
         } else {
           console.error(`Input element with data-index="${index}" not found.`);
         }
-      }
+      };
 
-      function handleSubmit() {
+      const handleSubmit = () => {
         const formData = new FormData(descriptionForm);
         const data = [];
 
-        // Debug: Log formData entries
-        console.log("FormData entries:");
         formData.forEach((value, key) => {
           console.log(`Key: ${key}, Value: ${value}`);
         });
 
-        // Iterate over input elements directly if formData is empty
         const inputs = descriptionForm.querySelectorAll("input[data-index]");
         inputs.forEach((input) => {
           const index = input.dataset.index;
           const originalValue = input.dataset.originalValue;
           const value = input.value;
 
-          // Get the corresponding select element
           const select = descriptionForm.querySelector(
             `select[data-index="${index}"]`
           );
@@ -353,18 +342,19 @@
             index: index,
             originalDescription: originalValue,
             correctedDescription: value !== originalValue ? value : undefined,
-            errorType: errorType !== "" ? errorType : undefined, // Include error type if not empty
+            errorType: errorType !== "" ? errorType : undefined,
           };
 
-          console.log("Processing item:", item); // Debugging log
+          console.log("Processing item:", item);
           data.push(item);
         });
 
         console.log("Submitted data:", JSON.stringify(data, null, 2));
-        // Send corrected data to the server
-      }
+      };
 
-      img.onload = function () {
+      submitButton.addEventListener("click", handleSubmit);
+
+      img.onload = () => {
         const imgWidth = img.naturalWidth;
         const imgHeight = img.naturalHeight;
         const scaleX = img.clientWidth / imgWidth;
@@ -376,7 +366,7 @@
             console.log("OCR data loaded:", ocrData);
             drawBoxes(ocrData, scaleX);
 
-            zoomControl.addEventListener("input", function () {
+            zoomControl.addEventListener("input", () => {
               const zoomLevel = parseFloat(zoomControl.value);
               img.style.transform = `scale(${zoomLevel})`;
               img.style.transformOrigin = "top left";
