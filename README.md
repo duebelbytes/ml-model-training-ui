@@ -17,7 +17,7 @@ OCR Training UI is an Optical Character Recognition (OCR) training tool designed
 - **Toggle Panel**: Easily toggle the annotation panel for a streamlined interface.
 
 ## Demo
-A live demo of the project can be found [here](https://duebelbytes.github.io/ocr-training-ui/).
+A live demo of the project can be found [here](https://duebelbytes.github.io/ml-model-training-ui/).
 
 ## Installation
 1. Clone the repository:
