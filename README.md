@@ -23,13 +23,13 @@ A live demo of the project can be found [here](https://duebelbytes.github.io/ml-
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/duebelbytes/ocr-training-ui.git
+    git clone https://github.com/duebelbytes/ml-model-training-ui.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd ocr-training-ui
+    cd ml-model-training-ui
     ```
 
 3. Open the `index.html` file in your preferred web browser to run the application locally.
